@@ -1,0 +1,81 @@
+r bacwards elim script / lecture 52
+
+    backwardElimination <- function(x, sl) {
+        numVars = length(x)
+        for (i in c(1:numVars)){
+          regressor = lm(formula = Profit ~ ., data = x)
+          maxVar = max(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"])
+          if (maxVar > sl){
+            j = which(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"] == maxVar)
+            x = x[, -j]
+          }
+          numVars = numVars - 1
+        }
+        return(summary(regressor))
+      }
+      
+      SL = 0.05
+      dataset = dataset[, c(1,2,3,4,5)]
+      backwardElimination(training_set, SL)
+	  
+	  
+	  
+explanation ( by student):
+Disclaimer: I am a beginner at R but have experience with python. So don't consider this the absolute explanation of this code.
+
+backwardElimination <- function(x, sl) {  
+
+Created a function named backwardElimination that takes two parameters x  and sl 
+
+numVars = length(x) 
+
+Assigned number of columns in x  to numVars 
+
+for (i in c(1:numVars)){ 
+
+Created a loop that runs from 1  to value of numVars 
+
+regressor = lm(formula = Profit ~ ., data = x) 
+
+Created a linear model with profit as dependent variable and everything else as independent variables that correlates to dependent variable
+
+maxVar = max(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"]) 
+
+Assigned maximum of "Pr(>|t|)"  column values which are between second and numVars ' value rows (inclusive) to maxVar 
+
+if (maxVar > sl){ 
+
+If maxVar  greater than the parameter sl run the following code
+
+j = which(coef(summary(regressor))[c(2:numVars), "Pr(>|t|)"] == maxVar) 
+
+Searched which coefficient's p value is equal to the value of maxVar  and assigned it to j (The position of the coefficient)
+
+x = x[, -j] 
+
+Remove that column from x  which shares the same position as j 
+
+    }
+    numVars = numVars - 1
+
+Reduce 1  from numVars  because we deleted a column. (Although there is a small problem with the code which will make numVars  smaller on each iteration irrespective of whether the if block executes. But this won't affect the final result)
+
+    }
+    return(summary(regressor))
+
+Return the summary of our model after the for loop ends
+
+    }
+     
+    SL = 0.05
+
+Assigned 0.05  to the variable SL which is our variable for significance level
+
+dataset = dataset[, c(1,2,3,4,5)] 
+
+Assigned dataset  to dataset  in a different format which is not needed since we are using automatic implementation of Backward Elimination
+
+backwardElimination(training_set, SL) 
+
+Call the backwardElimination  function with training_set  and SL  as parameters which will start our code. (It should have been dataset  instead of training_set  but anyway it won't matter much to the result. But dataset  seems to be better for evaluating the relationship between independent variables and dependent variable)
+Mark as helpful (2) 

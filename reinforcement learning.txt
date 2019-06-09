@@ -1,0 +1,110 @@
+Reinforcement Learning (L 167-185)
+ data up to t used to decide action at t + 1, success = reward, failure = punishment
+ machines learn by trial and error
+ 
+ L168 multi-armed bandit problem
+	not really any punishment, just 1/0 in algorithm
+	can bridge into AI issues (e.g., teaching robot dog to walk)
+	
+	MABP problem 
+		approach set of slot machines 
+		which has best payoff?
+		longer take to figure it out = waste more $ on worse ones
+			exploration / exploitation balance -- need to explore but also want to exploit
+			regret (mathematical) = when use nonoptimal machine, diff b/t return on optimal versus nonoptimal
+			regret white paper - using confidence bounds for exploration exploitation tradeoffs (by Auer in Austria)
+		
+	common applicatin - advertising, e.g. "welcome to coke side of life" ad campaign
+		have five ad images, which is best? can only know after user clicks
+		method - run "ab test" (armed bandit test) = pure exploration with minimal exploitation
+			better to find out best while running campaign and exploit simultaneously
+			
+ L169 UCB (upper confidence bound) intuition
+	problem
+		we have d arms (each arm = an ad)
+		each time an user connects to a page = a round
+		at each round n, we choose one ad to display to the user
+		ad i gives reward r{sub}i(n) in the set {0.1} ri(n) = 1 if click, 0 if not
+		goal is to maximize reward
+	
+	UCB algorithm - skipped in lecture "you will do this later"
+		Step 1: at each round n, consider two numbers for each ad i
+			Ni(n) = number of times ad i was selected up to round n
+			Ri(n) = sum of rewards of ad i up to round need
+			
+		Step 2: compute [overbar = average (?)]
+			average of reward of ad i up to round n
+				r[overbar]{sub}i(n) = Ri(n) / Ni(n)
+			confidence interval =
+				lower							upper
+				[r[overbar]{sub}i(n) - delta-i(n), r[overbar]{sub}(n) + delta-i(n)]
+				in other words, average or reward +/- change in i at need
+				delta-i(n) = sqrt( { 3/2 } * { log(n) / Ni(n)} )
+				
+		Step 3: select the ad i with max UCB (r[overbar]i(n) + delta-i(n)
+	
+	choose any d with highest confidence bound,
+		pull arm, result will be 1 or 0,
+		over time, starting value of roverbar will approach real value of data
+			and confidence bound should shrink (on both ends)
+	repeat
+		should automatically repeat on best on option
+			(until UCB shrinks too low, then will leave and should gradually return)
+		exploiting any option, even if outcome good, increases chance of other machines being used
+		(until UCB approaches true val and true val > any other UCB)
+		
+more with strategies here https://gist.github.com/roycoding/fc430c360c87a755047185b796c10a5e
+Spark for data streaming?
+
+Thompson Sampling intuition L 179
+	... Bayesian Inference / complex mathematics (will be in practical tutorials)
+	Algorightm 
+		Step 1 @ earch round n, consider 2 numbers for each ad i
+			N("1/i')(n) = number of times ad i got reward 1 up to round n
+			N("0/i")(n) = number of times ad i got reward 0 up to round need
+			*notation "x/y" = super/sub script
+		
+		Step 2 for each ad i take a random draw from the distribution
+			Theta-subi(n) = B( N"1/i")(n) + 1, N(0/i)(n) + 1 )
+			
+		Step 3 select ad with highest Theta-subi(n)
+	
+	180 Intuition: 
+		Graph.  X = return, three bandits at different x points
+				(algorithm d/n know this, 1< 2 <3)
+			say do some trial runs for machine(s), can see hits around ideal value -> distribution(s)
+				purpose of distributions is not to guess actual distributions of each	
+				but rather where actual expected value *might* lie
+			-then pull values out of each distribution )= model of world)
+				if distributions overlap, possible to pull, e.g., 2>3 values
+				so have rudimentary model of overall distribution of all three	
+				now "pull arm" of top value, get real data, perception (distribution model will change
+				repeat from -
+				until distributions substantially d/n overlap 
+			
+More TS L 181
+	comparison
+		UCB is deterministic (tries to narrow bands around each actual)
+			-> tries to yield a single solution  
+			(some def of deterministic disagree, saying all data known beforehand)
+			(but here determining #1 bandit not exact reward of each)
+		Thompson Sampling is probabilistic (has expected distribution curves)
+			-> meant to give distribution of possible outcomes (w/ prob'ty)
+		so, rerunning round in TS will change perception > UCB
+		
+		UCB requires update at every round
+		TS can accomodate delayed feedback
+			(but then you are just pulling top arm until update)
+		?? b/c UCB needs to know which arm has top UCB, so must be updated since last ??
+		so TCB good b/c can allow periodic/batch data updates (good for clicks, algorithm comp, etc.)
+	
+	End result: TS often preferred.
+	
+	182 on practicuum 
+
+		
+		
+		
+		
+		
+			

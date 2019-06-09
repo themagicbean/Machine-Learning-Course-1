@@ -1,0 +1,96 @@
+ML notes
+
+Always note data preprocessing stuff in Unit 1 before do anything
+
+//
+
+Unit 2  linear regression
+
+Lecture 23 
+
+ordinary least squares 
+sum of squares of deviance
+sum (y1 - y2) ^2 -> min
+
+//
+
+Unit 3 multiple linear regression
+
+lecture 31 multiple linear regression (single dep var, mult ind vars)
+note ppt (pdf) on models and homework solutions also there
+
+34, regressions MLR has multiple ind vars
+	 y = b0 + b1*x1 + b2*2 ...
+
+35 assumptions
+	linearity
+	homoscedasticity (homogoneity of variance)
+	multivariate normality (generalization of 1d normal distribution to higher dimensions)
+	independence of errors
+	lack of multicollinearity (dep var can NOT (lack) be predicted from multi dep vars with high degree of accuracy)
+
+36 dummy vars
+ y (profit) = b0 + {b1 * x1 (R&D)} + {b2 * x2 (Admin)} + {b3 * x3 (Marketing)} + 
+	b4 will be * three different columns (x4, 5, 6 = NY, CA , FL and val 0 / 1 for each)
+		so b4 * D1, b4 * D2, b4 * D3
+		but do NOT include ALL dummy vars in model -- dummy var trap (next lecture)
+		because is basically an extra constant (mathematically included in b0)
+
+37 dummy var trap
+  	d2 = 1- d1   -- this creates multicolinearity (model cannot distinguish between causation based on d1 or d2)
+	so can only have constant and *less than all* dummy var at a time (100 ds = can use 99, not all)
+	if multiple categories of dummy vars, follow this rule for each category 
+
+*interlude : review p-value or "sig"
+	 p value is probability of getting sample like ours, or more extreme IF null hypothesis is true
+	(null hypo a/k/a H-nought: no significant diff b/t sampled populations, appearance of diff only due to (sampling) error)
+	so small p value: indicates low possibility of getting sim result if null hypo true
+		but if null hypo true, we should have high possibilty of sim result, so low p value = logical problem
+	high p value = high chance of sim sample, 
+	usual p val = 0.05 (5% or less) = strong evidence of sampling effect (other #s also used)
+	if P is low, null must go
+	(null = variables of experiment had NO meaningful effect on results)
+
+38 must decided which vars (cols) to use (see pdf)
+	5 methods: all in, backward elimination*, forward selection*, bidirectional elim*, score comparison
+		* = "stepwise regression" (or sometimes this term only referes to bidir elim
+		
+	"all in" = throw in all variables (if need to or prior knowledge)
+	
+	backward elim	*
+		1. select significance level(SL) (eg .05)
+		2. fit model w/ all possible predictors
+		3. consider predictor with highest p-val.  if p > SL,** 4. remove that predictor
+		5. fit model (again) w/o removed variable* (Re-fit and re-create model w/ fewer vars - coefficients and constant will change)
+		**if p not > SL, done (if true for all vars)
+		(fastest process of methods given, focus of lectures)
+		
+	forward selection*
+		1. select SL
+		2. fit simple regression model w/ var w/ lowest p-val
+		3. keep this var and fit all possible models with 1 extra var
+		4. consider predictor with LOWEST p-val; if p < SL, go to step 3 (now use 2 base variables and build all models with 2 + 1 vars), repeat
+		5. when all vars p < SL, done (or all variables kicked out b/c p > sl)
+		
+	bidirectional elim	 *
+		1. select SL to (a) enter the model and (b) to stay in the model
+		2.  perfrom next step of fwd select (new var must have P < slenter to enter)
+		3.  perform all steps of backward elim (old variables must have p < slstay to stay
+		repeat 2 &3
+		4.  once no new variables can enter && no old variables can exit = done
+		(Very work intenstive, want to automate)
+	
+	all possible models (score comparison)
+		1. select criterion of goodness of rit (e.g r^2)
+		2  construct all possible models (2^N -1 total combos)
+		3.  choose the best
+		(insanely work intensive, 10 columns = 1,023 models)
+		
+43 can add X0 to B0 to make LR equation a model that uses vars for all (x0 = 1)
+
+//
+
+Lecture 53 (section 6) Polynomial Linear Regression
+y = b0 + b1x1 + b2x1^2 ... bnx1^n
+so one var to different powers
+why still called linear? "linear" refers to coefficients (linear combo of coeffects)

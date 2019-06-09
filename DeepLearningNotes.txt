@@ -1,0 +1,63 @@
+Deep Learning Notes
+
+L214
+	Geoffrey Hinton "father of deep learning"
+	goal: mimic braiin operation
+	
+	ANN (artificial neural net) ("shallow learning" model)
+		nodes for input values = input layer
+		middle = hidden layer (processing)
+		output value (output layer)
+	
+		further you separate = more hidden layers = more processing
+		= deep learning
+		
+L215 Plan of Attack (ANN)
+	
+	Outline
+		Neuron
+		Activation Function
+		How do NNs work?  (concrete example)   
+		How do NN learn?
+		Gradient Descent  (>> brute force)
+		Stochastic GD
+		Backpropagation
+		
+L216 Neuron
+	... basic neurophys
+	"synapse" = connection between neurons in NNs (ignores axon/dendrite issues)
+	neuron = node
+	gets input signals, gives output signal (singular)
+	input "signals" values (input/output values)
+		treated as ind. vars
+		need to standardize variables (mean 0 var'c 1) or normalize (get val 0-1)
+		see "Efficient Backprop" by Yann LeCun (link @ 10:50)
+	output values (signals)
+	single observation of inputs = of hidden layer = of output "all one row"
+	
+	weights are key
+		weigh each input 
+		when training, adding weights (= backpropagation and etc.)
+		
+	what happens in the neuron?
+		sum values of (weighted) inputs
+		apply activation function
+		& pass on / don't -- output signal
+		
+L217 The Activation Function (output)
+	four types (could be more)
+	Threshold = if x > 0 -> yes / no if <	binary 
+	Sigmoid == 1 / (1 + (e ^-x))  smoother 
+	Rectifier == > 0, gradually progresses as input value incrases
+	Hyperbolic Tangent - sigmoid but below zero
+		= (1- (e^-2x)) / (1+(e^-2x))
+	
+	Paper: Xavier Glorot, Deep Sparse Rectifier Neural Networks
+		
+L218 How do NNs work?
+
+
+
+	
+	
+		

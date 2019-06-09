@@ -1,0 +1,54 @@
+evaluating regression modles notes
+
+L 77 R squared intuition
+
+SSres = SUM (yiactual - yipred)^2
+(SSres = sum of squares of residuals)
+
+SStot SUM(yiactual - yavg)^2
+(total sum of squares)
+(this is technically a regression, just an average of all)
+
+R^2 = 1 - (SSres / SStot)
+how much better fit is our reg (SSres) than the avg line (SStot)?
+as line is better, SSres approaches 0 R^2 approaches 1
+so higher (closer to 1) R^2 is better
+
+R^2 can be negative if SSres is > SStot = terribly bad model :(
+
+
+///
+
+L 78 adjusted R^2 intuition
+adding variables will never decrease R^2 (can increase or stay the same)
+
+ADj R^2 = 1 - (1 - R^2) * {(n-1)/(n-p-1)}
+p = number of regressors
+n = sample size
+{} = penalization factor
+as p incrases, ratio increases, so term after 1st - increases
+so Adj R^2 val decreases (moves further from 1)
+so since adding new var increases p and R^2, adj R^2 will be affected more clearly
+	if variable does not help, increase in penalization factor reduces adj R^2
+	if variable does help, change in R^2 overwhelms penalization factor
+	
+///
+
+L 79 Evaluating regression models -- homework
+
+homework: back to startups problem, reconsider if need to remove .06 p-val facctor (marketing spend)
+
+OLS method never allows R^2 to decrease, but can use Adj R^2
+
+note that adj R^2 actually decreased when removed marketing spend ...
+
+///
+
+L 80 Interpreting Coefficients
+
+(using homeowrk / startup modle with BOTH RD & marketing
+
+Coefficients:
+		Estimate:  
+			sign: if is positive, correlation b/t ind and dep var
+			magnitude: be careful, very scale sensitive.  if 7.9e-01 and RD and profit in $, 1$ up RD -> .79cents

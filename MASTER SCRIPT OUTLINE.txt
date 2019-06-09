@@ -1,0 +1,26 @@
+Pseudocode
+
+
+Get & generically format dataset to degree possible
+
+
+Analyzer
+
+	Run model
+	
+	Get output (confusion matrix from all models)
+		Convert CM into TP/FP/TN/FN numbers
+		
+	Run stats
+		Accuracy = (TP + TN) / (TP + TN + FP + FN)
+		Precision = TP / (TP + FP)
+		Recall = TP / (TP + FN)
+		F1 Score = 2 * Precision * Recall / (Precision + Recall)
+		
+		
+		
+
+		
+Meta -- compare analyzer stat output
+	(or move analyzer here)
+	

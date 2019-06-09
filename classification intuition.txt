@@ -1,0 +1,224 @@
+Classification intuition lectures
+
+logistic regression intuition (L83)
+
+say you have two variables, age (varies along number line) and action taken (y/n = 1 or 0)
+	could do linear regression w/ probabilities (continuous function) ... kind of makes sense when b/t 0 and 1
+	
+	if do sigmoid function	
+		y = b0 + b1*x
+		p = 1/(1 + e^-y)
+		solve for y and put back in =
+		ln(p/(1-p)) = b0 + b1*x
+		-> sigmoid function which is logistic regression function (s- like curve, there are other equations)
+			
+		probability is "p-hat" (p^)
+		y^: anything below arbitrary line projected down, above projected up (to make 0/1 outcome)
+		(DV or dep var prediction)
+		
+K-NN (L97)
+	1. choose number K of neighbors (common default is 5)
+	2. take K nearest neighbors according to distance (Euclidian or otherwise, Euc most common)
+	3. count # of points in K that fell in one category or other (or more than 1)
+	4. assign new data point to category where counted most neighbors
+	
+	
+SVM (101) -- support vector machines
+	goal: separate two groups of points in 2d-space via a line / multiple lines
+		how to find best line (best decision boundary)
+			draw line that has maximum margin (distance between closest points to line)
+			closest points to line are called "support vectors" - they are the defining points
+			(in 2d they are points but in 2d / higher d they are actually vectors from origin)
+		line in middle (2d): maximum margin hyperplane (in multi-d space) aka maximum margin classifier
+			have + and negative hyperplanes bounding it and defining margin(s)
+		focus of SV is points(vectors) that are closest to being other thing(s)
+		
+kernel SVM intution (L105)
+	alternative methods when regions not linearly separable (e.g., cocentric circles of points)
+	L106 mapping to a higher dimension
+		use (mapping) function(s) to transform data set to new shapes in higher d, allowing linear (hyperplanar) separation in higher d
+		mapping to higher D space is computation-intensive
+
+		
+	L107 the Kernel Trick
+		Gaussian/RBF Kernel: K(x,Li) = e ^ -{ (||x-Li||^2) / (2sigma^2) }
+		x, Li are vectors.  x is a point, L=Landmark (L# i) (sigma = adjustible constant (?), more info later
+		landmark in middle of space / cone
+		vertical value = value of K
+		larger distance from landmark (][x-Li] = larger negative exponent = smaller value
+		as sigma goes up, boundary of curve moves outward 
+		can also use multiple kernel functions for multiple Xs and Ls (multi-hump graph)
+	
+	108 types of Kernel functions
+		sigmoid: K(k,y) = tanh( gamma * x^T*y + r)  (sigmoid curve)
+		polynomial      = (gamma * x^T * y +r) ^ d, gamma > 0 (curve)
+		other ...
+		
+L112 Bayes' Theorem
+	
+	hypo: have 2 machines producing widgets.  pile of mixed widgets.   have some data on machines
+	what is P(defective) of random widget from pile?
+	
+	Bayes':  P(A|B) = { P(B|A) * P(A) } / P(B)
+			posterior probability = {likelihood * prior probability} / marginal likelihood
+	
+	Machine 1: produces 30 w / hour; M-2 produces 20 w / hour
+	Out of all parts, 1% are defective.
+	Out of all defective parts, 50% from M-1 and 50% from M-2
+	Q: What is P( produced by M-2 && defective)
+	1 hour = 50 wrenches, P(M-1) = .6, P(M-2) = .4
+	P(defect) = 0.01
+	
+	If pull parts from defective pile,
+	P(M1|defect) = 50% (probability of defective part coming from M1)
+	P(x) = probability of random point added falling within circle
+		 = 
+	P(M2|defect) = 50% (probability of defective part coming from M2)
+	
+	Q: P (defect|M2)
+	(What is probability pick random part from M2 & it is defective)
+	P(defect|M2) = {P(M2|defect) * P(defect)} / P(M2)
+	P(defect|M2) = { 0.5 * 0.01 } / 0.4 
+				 = 0.0125
+				 
+	i.e., if 1000 wrenches, 400 from M2, 10 defective, 5 defective from M2	
+		q: % defective parts from M2 = 5/400 = 1.25%
+
+	L 113 Naive Bayes Classifier Intuition
+		dataset w/ age + salary as ind var, walk/drive to work as dep var
+		approach: apply Bayes' 2x.  1st for walk, 
+	
+		select marginal radius around new point, consider points inside to be similar
+		
+	L 114 more about naive bayes
+		"naive" -- relies on certain assumptions that may not be correct
+			assumes ind vars are truly independent
+			yet if, e.g., age and salary ... not so likely
+				
+		more on P(X): since P(X) is same for two different 
+			(i.e., p(defect) comparing M1 and M2)
+			frequently p(x) just eliminated from calculations
+			for purpose of COMPARING p(m1) and p(m2)
+			
+		what if more than 2 classes?  
+		
+		
+L119 Decision Tree
+	Classification works with categorical data
+	DT for classification works like DT for regression
+	Cuts data set into splits ("leaves")
+	Is an old method, more recently replaced / upgraded
+		upgrades : additional methods to build on top
+		- random forest (used in Kinect video game system)
+		- gradient boosting
+		- and more ...
+	# did not do code, but note many splits into rectangular areas
+	# watch out for overfitting
+	# R example seemed to suffer much less from overfitting -- check code
+	# new code section plotting the decision tree in R but not py
+	# shows how splits are analyzed
+	# py Q& A gives this as answer
+		https://medium.com/@rnbrown/creating-and-visualizing-decision-trees-with-python-f8e8fa394176
+		try to download it from anaconda command prompt using :
+		conda install pydotplus
+		
+L 123 Random Forest Class'n
+	Ensemble Learning: Take multiple algorithms, combine to -> final 
+		1. pick, at random, K data points
+		2. build decision tree based on K
+		3. repeat 1&2 until have created desired N number of N trees
+		4. to predict new point, take average of Ntrees prediction
+	
+	microsoft.com "Real-Tie Human Pose Recognition in Parts from Single Images"
+		explains DT / RF behind Kinect
+		
+	# again, did not do code
+	# beware overfitting (again)
+	# R -- need to install RandomForest
+	# did not post how to plot trees (can this be done for forest? when they differ would be due to underlying algorithm)
+
+127 - 132: evaluating classification models
+	L 127 false +s and -s
+		y is actual dv, y^ (y-hat) is predicted dv
+		false positive = "type 1 error" (negative = type ii). 
+			instructor opines II more dangerous than I 
+			b/c "warn of something d/n happen" v "d/n warn of something that can" (think medical...)
+		
+	L 128 confusion matrix
+		type I errors are top right (0,1), type II are bottom left (1,0)
+		rates
+			accuracy rate = correct / total (% accurate)
+			error rate = wrong / total (% inaccurate)
+		
+	L 129
+		accuracy rate of oversimplified model can be > better fit model	
+		(e.g., something almost never happens, stop ever predicting it will
+			can -> greater accuracy rate even though no logic now applied)
+		
+	L 130 CAP (cumulative accuracy profile) / CAP curve
+		problem: assume 10% of customers respond to mailing if random mailed
+			can draw straight line correlating # mailed to and # respond 
+		if were to target customers most likely to respond, 
+			should have a better response rate
+			but, assuming finite # of customers, difference will gradually disappear
+		curve connecting response rate of latter is CAP curve
+			area between CAP curve & inital response line is value of model
+			typically axes are convered to %
+		can compare multiple CAP curves to compare multiple models
+		(can also draw theoretical best model line for perfect model)
+		# Q&A says py has sklearn.metrics.roc_auc_score http://scikit-learn.org/stable/auto_examples/model_selection/plot_roc.html
+		bu CAP d/n = ROC (receiver operating characteristic)
+	
+	L 131 CAP analysis
+		first approach
+			ap = area between perfect line and random line
+			ar = area between model CAP curve and random line
+			ratio AR = ar / ap
+			
+		second approach
+			look at 50% line on x-axis, where does it meet y-val on model curve?
+				"rule of thumb"
+					<60% - model is garbage
+					...70% poor to average
+					...80% good - has real world value
+					...90% very good (rare) or maybe overfitting/forward looking vars
+					>90% - too good, probably overfit/forward looking vars / caution!
+		
+SECTION RECAP
+		
+		1. What are the pros and cons of each model ?
+
+Please find here a cheat-sheet that gives you all the pros and the cons of each classification model.
+
+2. How do I know which model to choose for my problem ?
+
+Same as for regression models, you first need to figure out whether your problem is linear or non linear. You will learn how to do that in Part 10 - Model Selection. Then:
+
+If your problem is linear, you should go for Logistic Regression or SVM.
+
+If your problem is non linear, you should go for K-NN, Naive Bayes, Decision Tree or Random Forest.
+
+Then which one should you choose in each case ? You will learn that in Part 10 - Model Selection with k-Fold Cross Validation.
+
+Then from a business point of view, you would rather use:
+
+- Logistic Regression or Naive Bayes when you want to rank your predictions by their probability. For example if you want to rank your customers from the highest probability that they buy a certain product, to the lowest probability. Eventually that allows you to target your marketing campaigns. And of course for this type of business problem, you should use Logistic Regression if your problem is linear, and Naive Bayes if your problem is non linear.
+
+- SVM when you want to predict to which segment your customers belong to. Segments can be any kind of segments, for example some market segments you identified earlier with clustering.
+
+- Decision Tree when you want to have clear interpretation of your model results,
+
+- Random Forest when you are just looking for high performance with less need for interpretation. 
+
+3. How can I improve each of these models ?
+
+Same answer as in Part 2: 
+
+In Part 10 - Model Selection, you will find the second section dedicated to Parameter Tuning, that will allow you to improve the performance of your models, by tuning them. You probably already noticed that each model is composed of two types of parameters:
+
+    the parameters that are learnt, for example the coefficients in Linear Regression,
+    the hyperparameters.
+
+The hyperparameters are the parameters that are not learnt and that are fixed values inside the model equations. For example, the regularization parameter lambda or the penalty parameter C are hyperparameters. So far we used the default value of these hyperparameters, and we haven't searched for their optimal value so that your model reaches even higher performance. Finding their optimal value is exactly what Parameter Tuning is about. So for those of you already interested in improving your model performance and doing some parameter tuning, feel free to jump directly to Part 10 - Model Selection.
+
+Now congratulations for having completed Part 3, and let's move on the next part of the journey:		

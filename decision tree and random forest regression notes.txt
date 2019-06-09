@@ -1,0 +1,31 @@
+l 69 
+decision trees
+
+CART - classification and regression trees
+	two types of trees (here, regression)
+	
+information entropy is issue (mathematically complex ...)
+
+with ind vars x1 and x2 (and dep var y projeccted to 3d dimension)
+
+tree will split data into sections.
+e.g., is 		x1 < 20? (split 1 @ x1, 20) y/n
+	split 2		 x2 < 170?
+	split 3		x2 < 200? (if no to split 2)
+	split 4		x1: < 40 (if no to split 1)
+
+avg Y in each split (section) 
+x1a, x2a pred value of ya = average Y in that section
+
+(10:31 gives visual of tree derived from scatterplot)
+
+DT d/n need feature scale b/c based NOT based on euclidian distance (72, 6:15ish); based on condition of ind var(s)
+
+///
+
+L73 random forest regression intuition (collection of decision (regression) trees)
+ steps
+	1. pick K data points from training set
+	2. build DT based on K points
+	3. choose N # of DTs & repeat steps 1 & 2
+	4. for a new data point, make each of N trees predict & then average across all predictions
