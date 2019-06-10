@@ -1,0 +1,51 @@
+CLUSTERING notes
+Clustering - don't know what you are looking for
+	trying to ID segments or clusters in dataset
+	
+L134 K-means clustering
+	stepa
+		1. choose number of clusters K
+		2. select, at random k points, the centroids (not necessarily from dataset)
+		3. assign each data point to closest* centroids
+			*criterai?  Euclidian?  Kernel?  Etc.
+		4. (refine) compute and place new centroid of each clustering
+		5. reassign data points.  repeat 4 & 5 until finished
+			(can use, e.g., line that splits centroids equidistantly)
+		
+	L 135 Random Initialization Trap
+		poor random init -> poor final outcome
+		solution: Kmeans++ algorithm 
+		
+	L 136 selecting # of clusters
+		WCSS (within cluster sum of squares)
+			= sum of sums of
+				for each point in cluster, sum of squares distances (Pi, Ci)^2
+		should give exp. curve drop., select # @ point where curve levels to linearish
+		"the elbow method" -- look for the elbow
+		
+#140 hierarchical clustering (HC)
+	often similar/same result to K-means / dif process
+	types of clustering: agglomerative (bottom-up) & divisive (top-down)
+	this + kmeans = agglomerative
+	steps
+		1. make each data point a single point cluster -> n clusters 
+		2. take two closest, combine -> n-1 clusters
+		3. repeat ...
+		4. only one cluster = end.
+		
+	define distance b/t clusters: closest points? centers/agvs? furthest? etc
+		can use Eulidian or other definitions of distance as well\
+	
+	#141 dendrogram
+	vertical height is distance b/t p1 and p2, horizontal line connects when clustered
+	
+	#142 set distance threshold
+	above X = no more clustering 
+	vertical distance gives hint as to best # of clusters 
+		if a horizontal line would cross vertical line, d/n use that vertical line
+		usually use threshold (horiz) that crosses tallest vert line to determine # clusters
+
+	// need to review scatterplot in py and arrays
+	// R dendrogram much more detailed than py, also easier to code -gram and clustering
+	//HC is based on cluster variance
+	// K means usueally performs better on large datasets

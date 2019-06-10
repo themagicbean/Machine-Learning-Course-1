@@ -1,0 +1,52 @@
+Assocation Rules Notes L 156 - 
+
+L 156 Apriori (py and R) and Eclat (R only)
+
+Apriori:  people buy diapers and beers -- are these related?
+
+three parts: support, confidence and lift
+
+	support(X) = # of subjects who X / total # of subjects
+		ex, # of people who saw Movie M2 are 10 / 100 = 10% support
+		
+	confidence(X1 -> X2) = # of people who X1 and X2 / # of people who X1
+		ex, # of people who saw Movie M1 are 40 /100
+		and # of people who saw both M1 and M2 are 7/ 40 (out of original 100)
+		then confidence = 7/40 = 17.5%
+		
+	lift = confidence / support
+		= 17.5 / 10 = 1.75
+		
+algorithm
+	1. set up minimum support and confidence
+	2. take all the subsets in transactions having higher support than minimum support
+	3. take all the rules of these subsets having higher confidence than minimum confidence
+	4. sort the rules by decreasing lift (greater lift = greater correlation b/t 1 and 2 (3 etc.))
+	
+	very slow, does multidimensional analysis ... so need limits
+
+L158 R first
+
+	creates a "sparse matrix" -- matrix with many 0s
+	one column per produce
+	"density" in summary = % of nonzero matrix entries
+	
+159 -- there is no general rule on what support/confidence values to use (varies by problem)
+160 -- visualizing
+
+161 et seq Python
+	--apyori file is from Python Software Foundation -- read it?
+		
+// overly high confidence will give false correlations based on, e.g., best sellers
+//  e.g., hot season --- buy a lot of water
+// 	and most popular food = eggs --> false correlation b/t water and eggs
+
+L 164 Eclat
+	like a simplified apriori
+	
+	steps
+		1. set a minimum support	
+		2.  take all subsets in transactions > minimum support
+		3. sort by decreasing support
+		
+//there is python eclat script(s) out there
