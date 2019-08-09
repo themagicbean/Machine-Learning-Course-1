@@ -1,0 +1,38 @@
+crossmax and soft entropy notes
+
+softmax aka normalized exponential function
+
+fsubj(z) = e^z-superj / (sigmak e^z-superk)
+
+softmax function smoothes last two values to gt total value of 1
+
+squashes k-dim vector to real value of range 0-1 w/ total of 1
+
+cross-entropy: Lsubi = -log(e^fsubysubi / sigmaj e^fsubj)
+
+or H(p,q) = - sigmax p(x) log q(X)
+
+CNN: cost function is called loss function w/ slightly different fn
+
+types of error:
+
+	classification error: 
+		not good b/c only determines if "right/wrong" answer (and not how sure)
+
+	mean squared error: 
+		sum of squared errors averaged across observations, more accurate
+
+	cross entropy: 
+		use of log helps nn to assess even small errors in gradient descent
+		
+		
+suggested vid:  jeffrey hinton, 'the softmax function' 
+
+reading:
+A Friendly Introduction to Cross-Entropy Loss, Rob DiPietro (2016)
+rdipietro.github.io/friendly-intro-to-cross-entropy-loss/
+
+heavy math;
+Peter Roelants (2016) How to implemtn a neural network intermezzo 2
+peterroelants.github.io/posts/neural_network_implementation_intermezzo02/
+
